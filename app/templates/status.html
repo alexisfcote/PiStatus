@@ -1,0 +1,28 @@
+{% extends "squelette.html" %}
+
+
+{% block corps %}
+	<h2>Transmission Daemon is {{isOpen}} </h2>
+	<p>
+	<a href="/open">Start</a>
+	<a href="/close">Stop</a>
+	<p>
+	{% if 1==isOpenBool %}
+	<a href="http://192.168.1.105:9091">Open</a>
+	{% endif %}
+	<p>
+	<h2>Minidlna is {{s_minidlna}} </h2>
+	{% if 1==v_minidlna %}
+	<a href="/scan_minidlna">Scan</a>
+	<a href="/stop_minidlna">Stop</a>
+	{% else %}
+	<a href="/start_minidlna">Start</a>
+	{% endif %}
+	<p>
+	<h2>Transcode status : {{trans_status}} </h2>
+
+	<a href="/transcode_startconversion">Start conversion</a>
+
+
+
+{% endblock %}

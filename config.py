@@ -1,0 +1,2 @@
+SRF_ENABLED = True
+SECRET_KEY = '32kj3hjf82kf2fj393j'

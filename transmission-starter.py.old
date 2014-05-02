@@ -1,0 +1,41 @@
+from flask import Flask, render_template, redirect, url_for
+from subprocess import call, check_output
+from os import system
+from sys import argv
+
+app = Flask(__name__)
+
+@app.route("/")
+def main():
+    a = check_output(["ps","-e","-o","pid,comm"])
+    isOpen = 'transmission-da' in a
+    if isOpen:
+        string = "running"
+        value = 1
+    else:
+        string = "not running"
+        value = 0
+    templateData = {
+        'isOpen' : string,
+        'isOpenBool' : value
+    }
+    return render_template('status.html', **templateData)
+
+@app.route("/open/")
+def open():
+   # call(["transmission-daemon"])
+   system("su -c transmission-daemon -s /bin/sh transmission")
+   return redirect(url_for('main'))
+
+@app.route("/close/")
+def close():
+   call(["service","transmission-daemon","stop"])
+   return redirect(url_for('main'))
+
+@app.errorhandler(404)
+def error404(error):
+    return "error " + str(error.code),error.code
+
+if __name__ == "__main__":
+    deb = 'debug' in argv
+    app.run(host='0.0.0.0', port=(8880), debug=deb)

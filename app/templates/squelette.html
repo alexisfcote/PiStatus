@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    {% block header %}
+        <meta charset="utf-8" />
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+        <title>{% block titre %}Pi status page{% endblock %}</title>
+    {% endblock %}
+	<meta content='width=device-width, initial-scale=1' name='viewport'/>
+    </head>
+
+    <body>
+	
+	<h1>{{self.titre()}}</h1>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	<ul>
+	{% for message in messages %}
+		<li>{{ message }} </li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	{% endwith %}
+        {% block corps %}{% endblock %}        
+	<p>
+        {% block footer %}Copyright AFC 2014{% endblock %}
+    </body>
+</html>

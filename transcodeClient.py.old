@@ -1,0 +1,18 @@
+import zmq
+
+def main():
+    context = zmq.Context()
+    socket =  context.socket(zmq.REQ)
+    socket.setsockopt(zmq.LINGER, 500)
+    socket.connect('tcp://localhost:5555')
+    msg = raw_input()
+    socket.send(msg)
+    if socket.poll(timeout=200):
+        msg = socket.recv()
+        print msg
+    else:
+        print "unreachable"
+
+
+if  __name__ == '__main__':
+    main()
