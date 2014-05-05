@@ -1,0 +1,17 @@
+{% extends "squelette.html" %}
+
+{% block titre %}Transmission Status{% endblock %}
+
+{% block corps %}
+<h1>self.titre</h1>
+<form action="" method="post">
+    <input type="text" name="nom" value="Votre nom" />
+    <textarea name="message">Votre message ici.</textarea>
+    <input type="submit" value="Envoyer" />
+</form>
+{% endblock %}
+
+
+{% block footer %}
+<footer>Copyright AFC 2014</footer>
+{% endblock %}

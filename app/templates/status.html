@@ -2,27 +2,57 @@
 
 
 {% block corps %}
-	<h2>Transmission Daemon is {{isOpen}} </h2>
-	<p>
-	<a href="/open">Start</a>
-	<a href="/close">Stop</a>
-	<p>
-	{% if 1==isOpenBool %}
-	<a href="http://192.168.1.105:9091">Open</a>
-	{% endif %}
-	<p>
-	<h2>Minidlna is {{s_minidlna}} </h2>
-	{% if 1==v_minidlna %}
-	<a href="/scan_minidlna">Scan</a>
-	<a href="/stop_minidlna">Stop</a>
-	{% else %}
-	<a href="/start_minidlna">Start</a>
-	{% endif %}
-	<p>
-	<h2>Transcode status : {{trans_status}} </h2>
 
-	<a href="/transcode_startconversion">Start conversion</a>
+{% if 1==isOpenBool %}
+	<div class="panel panel-success">
+{% else %}
+	<div class="panel panel-danger">
+{% endif %}
+            <div class="panel-heading">
+              <h2 class="panel-title">Transmission Daemon is {{isOpen}}</h2>
+            </div>
+            <div class="panel-body">				
+				{% if 1==isOpenBool %}
+					<div class="btn-group" >
+						<a type="button" class="btn btn-lg btn-primary" href="http://192.168.1.105:9091">Open</a>
+						<a type="button" class="btn btn-lg btn-danger" href="/close">Stop</a>
+					</div>
+				{% else %}
+					<a type="button" class="btn btn-lg btn-success" href="/open">Start</a>
+				{% endif %}
 
+            </div>
+    </div>
+{% if 1==v_minidlna %}
+	<div class="panel panel-success">
+{% else %}
+	<div class="panel panel-danger">
+{% endif %}
+            <div class="panel-heading">
+              <h2 class="panel-title">Minidlna is {{s_minidlna}} </h2>
+            </div>
+            <div class="panel-body">
+				{% if 1==v_minidlna %}
+				<div class="btn-group">
+				<a type="button" class="btn btn-lg btn-warning" href="/scan_minidlna">Scan</a>
+				<a type="button" class="btn btn-lg btn-danger" href="/stop_minidlna">Stop</a>
+				</div>
+				{% else %}
+					<a type="button" class="btn btn-lg btn-success" href="/start_minidlna">Start</a>
+				{% endif %}
+            </div>
+    </div>
+	
+
+	<div class="panel panel-info">
+
+            <div class="panel-heading">
+              <h2 class="panel-title">Transcode status : {{trans_status}} </h2>
+            </div>
+            <div class="panel-body">
+				<a type="button" class="btn btn-lg btn-success" href="/transcode_startconversion">Start conversion</a>
+            </div>
+    </div>
 
 
 {% endblock %}

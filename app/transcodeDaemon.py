@@ -7,11 +7,14 @@ import zmq
 import sys
 
 class threadConv (Thread):
+    def __init__(self,dirtosearch):
+        Thread.__init__(self)
+        self.dirtosearch = dirtosearch
     def run(self):
-        batchConv()
+        batchConv(self.dirtosearch)
 
-def server():
-    tread1 = threadConv()
+def server(dirtosearch):
+    tread1 = threadConv(dirtosearch)
     context = zmq.Context()
     socket = context.socket(zmq.REP)
     socket.bind('tcp://*:5555')
@@ -38,8 +41,7 @@ def server():
         socket.close()
 
 
-def batchConv():
-    dirtosearch = "/mnt/USBdrive/Films/transmission/test"
+def batchConv(dirtosearch):
     mkvFiles = filesthatendswith(".mkv",dirtosearch)
     mp4Files = filesthatendswith(".mp4",dirtosearch)
     mp4Filesname = []
@@ -86,7 +88,10 @@ if  __name__ == '__main__':
         print "client"
         client(sys.argv[2])
     elif sys.argv[1] == "server":
+        if len(sys.argv) != 3:
+            print "missing command"
+            sys.exit()
         print "server"
-        server()
+        server(sys.argv[2])
     else:
-        print "Missing argument, client [cmd] or server"
+        print "Missing argument, client [cmd] or server [folder]"

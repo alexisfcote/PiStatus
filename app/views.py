@@ -28,7 +28,6 @@ def main():
     # Transcode status
     trans_status = transcode_status()
 
-
     templateData = {
         'isOpen' : string,
         'isOpenBool' : value,
@@ -74,8 +73,7 @@ def transcode_status(cmd = "status"):
         returnmsg = redirect(url_for('main'))
     else:
         returnmsg = msg
-    flash(returnmsg)
-    return redirect(url_for('main'))
+    return returnmsg
 
 @app.route("/transcode_startconversion")
 def transcode_startconversion():
