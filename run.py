@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/home/pi/virt_env/Flask/bin/python
 from app import app
 from sys import argv
 deb = 'debug' in argv

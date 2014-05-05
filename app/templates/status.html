@@ -34,7 +34,7 @@
             <div class="panel-body">
 				{% if 1==v_minidlna %}
 				<div class="btn-group">
-				<a type="button" class="btn btn-lg btn-warning" href="/scan_minidlna">Scan</a>
+				<a type="button" class="btn btn-lg btn-primary" href="/scan_minidlna">Scan</a>
 				<a type="button" class="btn btn-lg btn-danger" href="/stop_minidlna">Stop</a>
 				</div>
 				{% else %}
@@ -51,6 +51,19 @@
             </div>
             <div class="panel-body">
 				<a type="button" class="btn btn-lg btn-success" href="/transcode_startconversion">Start conversion</a>
+            </div>
+    </div>
+
+	<div class="panel panel-info">
+
+            <div class="panel-heading">
+              <h2 class="panel-title">Consommation internet </h2>
+            </div>
+            <div class="panel-body">
+		<div class="progress">
+			<div class="progress-bar" role="progressbar" aria-valuenow={{ ratio_consom }} aria-valuemin="0" aria-valuemax="100" style="width: {{ratio_consom}}%;"><span class="sr-only">{{ ratio_consom }}% Complete</span></div>
+		</div>
+
             </div>
     </div>
 

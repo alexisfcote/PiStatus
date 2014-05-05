@@ -46,14 +46,15 @@ def batchConv(dirtosearch):
     mp4Files = filesthatendswith(".mp4",dirtosearch)
     mp4Filesname = []
     for mp4File in mp4Files:
-        mp4Filesname.append(os.path.splitext(mp4File)[0])
+        mp4Filesname.append(os.path.splitext(os.path.split(mp4File)[1])[0])
 
     for mkvFile in mkvFiles:
         (path,filename)=os.path.split(mkvFile)
         (filename,ext)=os.path.splitext(filename)
         if not filename in mp4Filesname:
             print filename
-            convoutput = check_output(["avconv", "-i", os.path.join(dirtosearch,path,filename+".mkv"), "-c:v", "copy", "-c:a" ,"copy", os.path.join(dirtosearch,path,filename+".mp4")])
+            #print path
+            convoutput = check_output(["avconv", "-i", os.path.join(dirtosearch,path,filename+".mkv"), "-c:v", "copy", "-c:a" ,"aac", "-strict", "experimental", "-b:a", "192K", os.path.join(dirtosearch,path,filename+".mp4")])
 
 
 def filesthatendswith(ext,dir):
@@ -61,7 +62,7 @@ def filesthatendswith(ext,dir):
     for root,dirs,files in os.walk(dir):
         for file in files:
             if file.endswith(ext):
-                Files.append(file)
+                Files.append(os.path.join(root,file))
     return Files
 
 def client(msg):

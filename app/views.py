@@ -4,6 +4,7 @@ from os import system
 
 from app import app
 import transcodeDaemon
+import checkConsommation
 
 
 @app.route("/")
@@ -28,12 +29,26 @@ def main():
     # Transcode status
     trans_status = transcode_status()
 
+    # Consommation ratio
+    try:
+        ratio_consom = checkConsommation.readConsom()
+    except:
+        ratio_consom = float('nan')
+        raise
+
+    if not(ratio_consom>=0):
+        ratio_consom = 9999 # invalid consommation to be displayed by template
+    ratio_consom = int(ratio_consom*100)
+    print ratio_consom
+
+
     templateData = {
         'isOpen' : string,
         'isOpenBool' : value,
         's_minidlna' : string_minidlna,
         'v_minidlna' : value_minidlna,
-        'trans_status' : trans_status
+        'trans_status' : trans_status,
+        'ratio_consom' : ratio_consom
     }
     return render_template('status.html', **templateData)
 
