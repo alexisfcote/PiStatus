@@ -6,6 +6,8 @@ import time
 import zmq
 import sys
 
+port = "5555"
+
 class threadConv (Thread):
     def __init__(self,dirtosearch):
         Thread.__init__(self)
@@ -17,7 +19,7 @@ def server(dirtosearch):
     tread1 = threadConv(dirtosearch)
     context = zmq.Context()
     socket = context.socket(zmq.REP)
-    socket.bind('tcp://*:5555')
+    socket.bind('tcp://*:'+port)
     try:
         while True:
             msg = socket.recv()
@@ -69,7 +71,7 @@ def client(msg):
     context = zmq.Context()
     socket =  context.socket(zmq.REQ)
     socket.setsockopt(zmq.LINGER, 500)
-    socket.connect('tcp://localhost:5555')
+    socket.connect('tcp://localhost:'+port)
     socket.send(msg)
     if socket.poll(timeout=200):
         msg = socket.recv()
