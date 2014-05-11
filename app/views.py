@@ -31,15 +31,15 @@ def main():
 
     # Consommation ratio
     try:
-        ratio_consom = checkConsommation.readConsom()
+        (ratio_consom,lastread) = checkConsommation.readConsom()
     except:
-        ratio_consom = float('nan')
-        raise
+        ratio_consom = -1
+        lastread = "unknown"
 
     if not(ratio_consom>=0):
-        ratio_consom = 9999 # invalid consommation to be displayed by template
+        ratio_consom = -1 # invalid consommation to be displayed by template
+
     ratio_consom = int(ratio_consom*100)
-    print ratio_consom
 
 
     templateData = {
@@ -48,7 +48,8 @@ def main():
         's_minidlna' : string_minidlna,
         'v_minidlna' : value_minidlna,
         'trans_status' : trans_status,
-        'ratio_consom' : ratio_consom
+        'ratio_consom' : ratio_consom,
+        'lastread' : lastread
     }
     return render_template('status.html', **templateData)
 

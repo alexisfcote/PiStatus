@@ -42,11 +42,12 @@ def readConsom(maxConsom = 150):
     except:
         raise
     # if the file is older than a day, refresh it
-    if not (os.path.getmtime(consommationpath) > (time.time() - 3600*24)):
+    filetime = os.path.getmtime(consommationpath)
+    if not (filetime > (time.time() - 3600*24)):
         main()
     consom = float(f.readline())
     f.close()
-    return consom/maxConsom
+    return (consom/maxConsom, time.ctime(filetime))
 
 
 if __name__ == '__main__':

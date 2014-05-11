@@ -54,12 +54,22 @@
             </div>
     </div>
 
-	<div class="panel panel-info">
+
+            {% if 0 > ratio_consom %}
+	     <div class="panel panel-warning">
+            {% elif 100 <= ratio_consom %}
+	     <div class="panel panel-danger">
+	    {% else %}
+	     <div class="panel panel-info">
+	    {% endif %}
 
             <div class="panel-heading">
-              <h2 class="panel-title">Consommation internet </h2>
+		    <h2 class="panel-title">Consommation internet en date du : {{lastread}} </h2>
             </div>
             <div class="panel-body">
+		    {% if ratio_consom < 0 %}
+		    Consommation introuvable
+		    {% endif %}
 		<div class="progress">
 			<div class="progress-bar" role="progressbar" aria-valuenow={{ ratio_consom }} aria-valuemin="0" aria-valuemax="100" style="width: {{ratio_consom}}%;"><span class="sr-only">{{ ratio_consom }}% Complete</span></div>
 		</div>
