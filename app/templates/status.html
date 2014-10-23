@@ -14,12 +14,15 @@
             <div class="panel-body">				
 				{% if 1==isOpenBool %}
 					<div class="btn-group" >
-						<a type="button" class="btn btn-lg btn-primary" href="http://192.168.1.105:9091">Open</a>
+						<a type="button" class="btn btn-lg btn-primary" target="_blank" href="http://192.168.1.105:9091">Open</a>
 						<a type="button" class="btn btn-lg btn-danger" href="/close">Stop</a>
 					</div>
 				{% else %}
 					<a type="button" class="btn btn-lg btn-success" href="/open">Start</a>
 				{% endif %}
+				<a type="button" class="btn btn-lg btn-default" target="_blank" href="http://thepiratebay.se/">Pirate Bay&raquo;</a>
+
+				<a type="button" class="btn btn-lg btn-default" target="_blank" href="http://kickass.to/">Kickass&raquo;</a>
 
             </div>
     </div>

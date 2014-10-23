@@ -6,6 +6,7 @@ from app import app
 import transcodeDaemon
 import checkConsommation
 
+transmissionUser = "transmission-daemon"
 
 @app.route("/")
 def main():
@@ -31,7 +32,7 @@ def main():
 
     # Consommation ratio
     try:
-        (ratio_consom,lastread) = checkConsommation.readConsom()
+        (ratio_consom,lastread) = checkConsommation.readConsom(250)
     except:
         ratio_consom = -1
         lastread = "unknown"
@@ -55,7 +56,7 @@ def main():
 
 @app.route("/open/")
 def open():
-   system("su -c transmission-daemon -s /bin/sh transmission")
+   system("su -c " + transmissionUser +" -s /bin/sh transmission")
    flash("transimission daemon started")
    return redirect(url_for('main'))
 
