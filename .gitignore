@@ -57,3 +57,6 @@ docs/_build/
 
 # old stuff
 *.old
+
+# Pycharm stuff
+.idea/
