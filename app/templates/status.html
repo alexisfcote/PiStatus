@@ -70,7 +70,7 @@
             <div class="panel panel-info">
         {% endif %}
         <div class="panel-heading">
-            <h2 class="panel-title">Consommation internet en de {{ user.videotron_username }} date du : {{ time.isoformat()[:-7] }} </h2>
+            <h2 class="panel-title">Consommation internet de {{ user.videotron_username }} en date du : {{ time.isoformat()[:-7] }} </h2>
         </div>
         <div class="panel-body">
         {% if ratio < 0 %}
@@ -81,12 +81,12 @@
                  aria-valuemax="100" style="width: {{ ratio }}%;"><span
                     class="sr-only">{{ ratio }}% Complete</span></div>
         </div>
+        </div>
+        </div>
     {% endfor %}
 
 
 
-</div>
-</div>
 
 
 {% endblock %}
