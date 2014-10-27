@@ -8,18 +8,21 @@ import sys
 
 port = "5555"
 
-class threadConv (Thread):
-    def __init__(self,dirtosearch):
+
+class threadConv(Thread):
+    def __init__(self, dirtosearch):
         Thread.__init__(self)
         self.dirtosearch = dirtosearch
+
     def run(self):
         batchConv(self.dirtosearch)
+
 
 def server(dirtosearch):
     tread1 = threadConv(dirtosearch)
     context = zmq.Context()
     socket = context.socket(zmq.REP)
-    socket.bind('tcp://*:'+port)
+    socket.bind('tcp://*:' + port)
     try:
         while True:
             msg = socket.recv()
@@ -44,34 +47,37 @@ def server(dirtosearch):
 
 
 def batchConv(dirtosearch):
-    mkvFiles = filesthatendswith(".mkv",dirtosearch)
-    mp4Files = filesthatendswith(".mp4",dirtosearch)
+    mkvFiles = filesthatendswith(".mkv", dirtosearch)
+    mp4Files = filesthatendswith(".mp4", dirtosearch)
     mp4Filesname = []
     for mp4File in mp4Files:
         mp4Filesname.append(os.path.splitext(os.path.split(mp4File)[1])[0])
 
     for mkvFile in mkvFiles:
-        (path,filename)=os.path.split(mkvFile)
-        (filename,ext)=os.path.splitext(filename)
+        (path, filename) = os.path.split(mkvFile)
+        (filename, ext) = os.path.splitext(filename)
         if not filename in mp4Filesname:
             print filename
-            #print path
-            convoutput = check_output(["avconv", "-i", os.path.join(dirtosearch,path,filename+".mkv"), "-c:v", "copy", "-c:a" ,"aac", "-strict", "experimental", "-b:a", "192K", os.path.join(dirtosearch,path,filename+".mp4")])
+            # print path
+            convoutput = check_output(
+                ["avconv", "-i", os.path.join(dirtosearch, path, filename + ".mkv"), "-c:v", "copy", "-c:a", "aac",
+                 "-strict", "experimental", "-b:a", "192K", os.path.join(dirtosearch, path, filename + ".mp4")])
 
 
-def filesthatendswith(ext,dir):
+def filesthatendswith(ext, dir):
     Files = []
-    for root,dirs,files in os.walk(dir):
+    for root, dirs, files in os.walk(dir):
         for file in files:
             if file.endswith(ext):
-                Files.append(os.path.join(root,file))
+                Files.append(os.path.join(root, file))
     return Files
+
 
 def client(msg):
     context = zmq.Context()
-    socket =  context.socket(zmq.REQ)
+    socket = context.socket(zmq.REQ)
     socket.setsockopt(zmq.LINGER, 500)
-    socket.connect('tcp://localhost:'+port)
+    socket.connect('tcp://localhost:' + port)
     socket.send(msg)
     if socket.poll(timeout=200):
         msg = socket.recv()
@@ -81,8 +87,7 @@ def client(msg):
     return msg
 
 
-
-if  __name__ == '__main__':
+if __name__ == '__main__':
     if sys.argv[1] == "client":
         if len(sys.argv) != 3:
             print "missing command"

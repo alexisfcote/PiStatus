@@ -3,82 +3,90 @@
 
 {% block corps %}
 
-{% if 1==isOpenBool %}
-	<div class="panel panel-success">
-{% else %}
-	<div class="panel panel-danger">
-{% endif %}
-            <div class="panel-heading">
-              <h2 class="panel-title">Transmission Daemon is {{isOpen}}</h2>
-            </div>
-            <div class="panel-body">				
-				{% if 1==isOpenBool %}
-					<div class="btn-group" >
-						<a type="button" class="btn btn-lg btn-primary" target="_blank" href="http://192.168.1.105:9091">Open</a>
-						<a type="button" class="btn btn-lg btn-danger" href="/close">Stop</a>
-					</div>
-				{% else %}
-					<a type="button" class="btn btn-lg btn-success" href="/open">Start</a>
-				{% endif %}
-				<a type="button" class="btn btn-lg btn-default" target="_blank" href="http://thepiratebay.se/">Pirate Bay&raquo;</a>
+    {% if 1==isOpenBool %}
+        <div class="panel panel-success">
+    {% else %}
+        <div class="panel panel-danger">
+    {% endif %}
+<div class="panel-heading">
+    <h2 class="panel-title">Transmission Daemon is {{ isOpen }}</h2>
+</div>
+<div class="panel-body">
+    {% if 1==isOpenBool %}
+        <div class="btn-group">
+            <a type="button" class="btn btn-lg btn-primary" target="_blank" href="http://192.168.1.105:9091">Open</a>
+            <a type="button" class="btn btn-lg btn-danger" href="/close">Stop</a>
+        </div>
+    {% else %}
+        <a type="button" class="btn btn-lg btn-success" href="/open">Start</a>
+    {% endif %}
+    <a type="button" class="btn btn-lg btn-default" target="_blank" href="http://thepiratebay.se/">Pirate Bay&raquo;</a>
 
-				<a type="button" class="btn btn-lg btn-default" target="_blank" href="http://kickass.to/">Kickass&raquo;</a>
+    <a type="button" class="btn btn-lg btn-default" target="_blank" href="http://kickass.to/">Kickass&raquo;</a>
 
-            </div>
+</div>
+</div>
+    {% if 1==v_minidlna %}
+        <div class="panel panel-success">
+    {% else %}
+        <div class="panel panel-danger">
+    {% endif %}
+<div class="panel-heading">
+    <h2 class="panel-title">Minidlna is {{ s_minidlna }} </h2>
+</div>
+<div class="panel-body">
+    {% if 1==v_minidlna %}
+        <div class="btn-group">
+            <a type="button" class="btn btn-lg btn-primary" href="/scan_minidlna">Scan</a>
+            <a type="button" class="btn btn-lg btn-danger" href="/stop_minidlna">Stop</a>
+        </div>
+    {% else %}
+        <a type="button" class="btn btn-lg btn-success" href="/start_minidlna">Start</a>
+    {% endif %}
+</div>
+</div>
+
+
+    <div class="panel panel-info">
+
+        <div class="panel-heading">
+            <h2 class="panel-title">Transcode status : {{ trans_status }} </h2>
+        </div>
+        <div class="panel-body">
+            <a type="button" class="btn btn-lg btn-success" href="/transcode_startconversion">Start conversion</a>
+        </div>
     </div>
-{% if 1==v_minidlna %}
-	<div class="panel panel-success">
-{% else %}
-	<div class="panel panel-danger">
-{% endif %}
-            <div class="panel-heading">
-              <h2 class="panel-title">Minidlna is {{s_minidlna}} </h2>
-            </div>
-            <div class="panel-body">
-				{% if 1==v_minidlna %}
-				<div class="btn-group">
-				<a type="button" class="btn btn-lg btn-primary" href="/scan_minidlna">Scan</a>
-				<a type="button" class="btn btn-lg btn-danger" href="/stop_minidlna">Stop</a>
-				</div>
-				{% else %}
-					<a type="button" class="btn btn-lg btn-success" href="/start_minidlna">Start</a>
-				{% endif %}
-            </div>
-    </div>
-	
-
-	<div class="panel panel-info">
-
-            <div class="panel-heading">
-              <h2 class="panel-title">Transcode status : {{trans_status}} </h2>
-            </div>
-            <div class="panel-body">
-				<a type="button" class="btn btn-lg btn-success" href="/transcode_startconversion">Start conversion</a>
-            </div>
-    </div>
 
 
-            {% if 0 > ratio_consom %}
-	     <div class="panel panel-warning">
-            {% elif 100 <= ratio_consom %}
-	     <div class="panel panel-danger">
-	    {% else %}
-	     <div class="panel panel-info">
-	    {% endif %}
 
-            <div class="panel-heading">
-		    <h2 class="panel-title">Consommation internet en date du : {{lastread}} </h2>
-            </div>
-            <div class="panel-body">
-		    {% if ratio_consom < 0 %}
-		    Consommation introuvable
-		    {% endif %}
-		<div class="progress">
-			<div class="progress-bar" role="progressbar" aria-valuenow={{ ratio_consom }} aria-valuemin="0" aria-valuemax="100" style="width: {{ratio_consom}}%;"><span class="sr-only">{{ ratio_consom }}% Complete</span></div>
-		</div>
+    {% for user in users %}
+        {% set ratio = user.bandwidth_used/user.bandwidth_allowed*100 %}
+        {% set time = user.timestamp %}
+        {% if 0 > ratio %}
+            <div class="panel panel-warning">
+        {% elif 100 <= ratio %}
+            <div class="panel panel-danger">
+        {% else %}
+            <div class="panel panel-info">
+        {% endif %}
+        <div class="panel-heading">
+            <h2 class="panel-title">Consommation internet en de {{ user.videotron_username }} date du : {{ time.isoformat()[:-7] }} </h2>
+        </div>
+        <div class="panel-body">
+        {% if ratio < 0 %}
+            Consommation introuvable
+        {% endif %}
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow={{ ratio }} aria-valuemin="0"
+                 aria-valuemax="100" style="width: {{ ratio }}%;"><span
+                    class="sr-only">{{ ratio }}% Complete</span></div>
+        </div>
+    {% endfor %}
 
-            </div>
-    </div>
+
+
+</div>
+</div>
 
 
 {% endblock %}

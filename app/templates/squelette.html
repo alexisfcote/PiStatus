@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
     {% block header %}
-	<link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
-	<link href="/static/css/jumbotron-narrow.css" rel="stylesheet">
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link href="/static/css/jumbotron-narrow.css" rel="stylesheet">
         <title>{% block titre %}Pi status page{% endblock %}</title>
-	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-	<meta content='width=device-width, initial-scale=1' name='viewport'/>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <meta content='width=device-width, initial-scale=1' name='viewport'/>
     {% endblock %}
-    </head>
+</head>
 
-    <body>
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-	<div class="container">
+<body>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<div class="container">
 
 
-		<div class="jumbotron">
-		<h1>{{self.titre()}}</h1>
-		</div>
-		{% with messages = get_flashed_messages() %}
-		{% if messages %}
-		<ul>
-		{% for message in messages %}
-		<div class="alert alert-success">{{ message }} </div>
-		{% endfor %}
-		</ul>
-		{% endif %}
-		{% endwith %}
-			{% block corps %}{% endblock %}        
-		<p>
-	</div>
-        {% block footer %}
- 	<div class="well">
-	Copyright AFC 2014
-	</div>
-	{% endblock %}
-    </body>
+    <div class="jumbotron">
+        <h1>{{ self.titre() }}</h1>
+    </div>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <div class="alert alert-success">{{ message }} </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    {% block corps %}{% endblock %}
+    <p>
+</div>
+{% block footer %}
+    <div class="well">
+        Copyright AFC 2014
+    </div>
+{% endblock %}
+</body>
 </html>
