@@ -63,3 +63,4 @@ docs/_build/
 
 # db
 *.db
+db_repository/
