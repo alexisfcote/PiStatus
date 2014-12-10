@@ -87,6 +87,24 @@
 
 
 
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h2 class="panel-title">New user</h2>
+        </div>
+        <div class="panel-body">
+		<form method="post" action={{ url_for("add_user")}}>
+                  <label for="videotronuser">Videotron user:</label>
+                  <input type="text" name="videotronuser" /><br />
+                  <label for="consommax">Allowed bandwidth:</label>
+                  <input type="text" name="consomax" /><br />
+		  <a><input type="submit" class="btn btn-lg btn-primary" value="Add"/></a>
+                </form>
+        </div>
+    </div>
+
+
+
+
 
 
 {% endblock %}

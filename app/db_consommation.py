@@ -51,3 +51,12 @@ def new_user(videotronuser, max_consom):
                        timestamp=datetime.datetime.now())
     db.session.add(user)
     db.session.commit()
+    update_user(user, force=True)
+
+def del_user(user):
+    """ Delete a user from the database
+    :param user: user to delete
+    :return:
+    """
+    db.session.delete(user)
+    db.session.commit()

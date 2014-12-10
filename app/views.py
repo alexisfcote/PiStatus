@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from subprocess import call, check_output
 from os import system
 
@@ -98,6 +98,15 @@ def transcode_startconversion():
     msg = transcode_status("startconversion")
     flash(msg)
     return redirect(url_for('main'))
+
+@app.route("/add_user", methods=['POST', 'GET'])
+def add_user():
+    Vuser=request.form['videotronuser']
+    consom=int(request.form['consomax'])
+    db_consommation.new_user(Vuser, consom)
+    flash("added user " + Vuser)
+    return redirect(url_for('main'))
+
 
 
 @app.errorhandler(404)
