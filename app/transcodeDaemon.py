@@ -30,6 +30,7 @@ def server(dirtosearch):
                 if tread1.is_alive():
                     socket.send("Already running")
                 else:
+                    tread1 = threadConv(dirtosearch)
                     tread1.start()
                     socket.send("Started")
 
@@ -50,6 +51,7 @@ def batchConv(dirtosearch):
     mkvFiles = filesthatendswith(".mkv", dirtosearch)
     mp4Files = filesthatendswith(".mp4", dirtosearch)
     mp4Filesname = []
+    print "Converting ..."
     for mp4File in mp4Files:
         mp4Filesname.append(os.path.splitext(os.path.split(mp4File)[1])[0])
 
@@ -62,6 +64,7 @@ def batchConv(dirtosearch):
             convoutput = check_output(
                 ["avconv", "-i", os.path.join(dirtosearch, path, filename + ".mkv"), "-c:v", "copy", "-c:a", "aac",
                  "-strict", "experimental", "-b:a", "192K", os.path.join(dirtosearch, path, filename + ".mp4")])
+    print "Done"
 
 
 def filesthatendswith(ext, dir):

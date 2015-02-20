@@ -80,8 +80,12 @@
             <div class="progress-bar" role="progressbar" aria-valuenow={{ ratio }} aria-valuemin="0"
                  aria-valuemax="100" style="width: {{ ratio }}%;"><span
                     class="sr-only">{{ ratio }}% Complete</span></div>
+        {{ '{} / {} Go'.format(user.bandwidth_used, user.bandwidth_allowed) }} </div>
+        <form method="post" action={{ url_for("del_user",user = user.videotron_username)}}>
+		  <a><input type="submit" class="btn btn-sm btn-primary" value="Remove"/></a>
+                </form>
         </div>
-        </div>
+
         </div>
     {% endfor %}
 

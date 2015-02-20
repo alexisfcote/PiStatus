@@ -85,12 +85,7 @@ def scan_minidlna():
 
 
 def transcode_status(cmd="status"):
-    msg = transcodeDaemon.client(cmd)
-    if msg == "Starded":
-        returnmsg = redirect(url_for('main'))
-    else:
-        returnmsg = msg
-    return returnmsg
+    return transcodeDaemon.client(cmd)
 
 
 @app.route("/transcode_startconversion")
@@ -106,6 +101,14 @@ def add_user():
     db_consommation.new_user(Vuser, consom)
     flash("added user " + Vuser)
     return redirect(url_for('main'))
+
+@app.route("/del_user/<user>", methods=['POST', 'GET'])
+def del_user(user):
+    user_to_del = User.query.filter_by(videotron_username=user).first()
+    db_consommation.del_user(user_to_del)
+    flash("deleted user " + user)
+    return redirect(url_for('main'))
+
 
 
 
