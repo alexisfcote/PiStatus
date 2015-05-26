@@ -3,7 +3,7 @@ import requests
 import bs4
 import datetime
 from app import models, db
-
+import re
 
 def fetch_consom(user):
     """
@@ -17,14 +17,21 @@ def fetch_consom(user):
     # on le lit avec bs4
     data = soup.findAll("span","txtdata")
     try:
+        correct = "none"
         for text in data:
             if re.findall("Total",text.text):
                 correct =  text.text
-        consom = int(float(re.findall("[0-9]+.?[0-9]+",correct)[0]))
+        if correct != "none":
+            consom = int(float(re.findall("[0-9]+.?[0-9]+",correct)[0]))
+        else:
+            consom = int(-1)
         # on sort du tableau le chiffre de consommation voulue en Go
     except (ValueError, AttributeError):
         print "Pas un nombre valide"
         consom = int(-1)
+    except:
+        raise
+        print consom
     return consom
 
 
