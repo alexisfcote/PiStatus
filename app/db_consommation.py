@@ -11,20 +11,20 @@ def fetch_consom(user):
     :return: bandwidth used as int or nan if invalid
     """
     response = requests.get(
-        "https://extranet.videotron.com/services/secur/extranet/tpia/Usage.do?lang=FRENCH&compteInternet=" + user)
+        "http://consocable.electronicbox.net/index.php?actions=list&lng=fr&code=" + user)
     # on va chercher le HTML de la page avec request
     soup = bs4.BeautifulSoup(response.text)
     # on le lit avec bs4
-    tables = soup.table
-    a = tables.tr.table.tr.table.table.table.table.tr.next_sibling.next_sibling.next_sibling.next_sibling.td.next_siblings
-    # on sort du tableau le chiffre de consommation voulue en Go
+    data = soup.findAll("span","txtdata")
     try:
-        consom = int(float(list(a)[11].string))
-    except (ValueError):
+        for text in data:
+            if re.findall("Total",text.text):
+                correct =  text.text
+        consom = int(float(re.findall("[0-9]+.?[0-9]+",correct)[0]))
+        # on sort du tableau le chiffre de consommation voulue en Go
+    except (ValueError, AttributeError):
         print "Pas un nombre valide"
         consom = int(-1)
-    except:
-        raise
     return consom
 
 
