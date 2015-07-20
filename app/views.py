@@ -51,7 +51,8 @@ def main():
 
 @app.route("/open/")
 def open_transmission():
-    system("su -c " + transmissionUser + " -s /bin/sh transmission")
+    #system("su -c " + transmissionUser + " -s /bin/sh transmission")
+    call(["service", "transmission-daemon", "start"])
     flash("transimission daemon started")
     return redirect(url_for('main'))
 
